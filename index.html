@@ -1,35 +1,52 @@
 <html>
-<head>
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar.image-aframe.prod.js"></script>
-</head>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
+      <a-assets>
+        <video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" crossorigin="anonymous"></video>
+        <img id="image1" src="imahe1.jpg">
+        <img id="image2" src="imahe1.jpg">
+      </a-assets>
 
-<body>
-    <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" renderer="antialias: true; colorManagement: true; sortObjects: true; physicallyCorrectLights: true; maxCanvasWidth: 1920; maxCanvasHeight: 1920;">
-        <a-assets>
-            <video id="video" src="https://cdn.glitch.com/aac91519-95ff-4996-8909-e5c41f3cfff9%2Fmov_bbb.mp4?v=1634028177886" autoplay loop crossorigin="anonymous"></video>
-        </a-assets>
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video id="videoEntity" src="#video" material="src: #video" geometry="primitive: plane; height: 0.552; width: 1;" rotation="0 0 0" play-on-window-click="true"></a-video>
+        <a-image src="#image1" position="-0.5 -0.5 0" height="0.2" width="0.2" class="clickable"></a-image>
+        <a-image src="#image2" position="0.5 -0.5 0" height="0.2" width="0.2" class="clickable"></a-image>
+      </a-entity>
 
-        <a-entity mindar-image-target="targetIndex: 0">
-            <a-video material="src: #video" geometry="primitive: plane; height: 1.5; width: 2" rotation="-90 0 0" position="0 0 0" ></a-video>
-        </a-entity>
     </a-scene>
 
     <script>
-        AFRAME.registerComponent('videoplay-pause', {
-            init: function () {
-                this.el.addEventListener('click', function (evt) {
-                    var video = document.querySelector('#video');
-                    video.paused ? video.play() : video.pause();
-                });
-            }
-        });
+      AFRAME.registerComponent('videoplay-pause', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            let video = document.querySelector('#video');
+            
+            if(video.paused){
+              video.play();
+            } else {
+              video.pause();
+            } 
+          }); 
+        }
+      });
 
-        document.querySelector('a-scene').addEventListener('renderstart', function(){
-            var video = document.querySelector('#video');
-            video.play();
+      document.querySelector('#videoEntity').addEventListener('markerLost', function() {
+        let video = document.querySelector('#video');
+        video.pause();
+      });
+
+      var buttons = document.querySelectorAll('.clickable');
+      for(var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function () {
+          window.open('https://www.google.com', '_blank');
         });
+      }
     </script>
-</body>
+  </body>
 </html>
