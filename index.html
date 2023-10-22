@@ -2,29 +2,35 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar.image-aframe.prod.js"></script>
   </head>
   <body>
     <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
       
       <a-entity mindar-image-target="targetIndex: 0" id="marker">
-        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" class="clickable" position="0 2 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video>
+        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" position="0 2 0" height="2" width="1" rotation="0 0 0" playsinline></a-video>
 
         <a-image src="image1.jpg" class="clickable" position="-0.7 0 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
-        <a-image src="image1.jpg" class="clickable" position="0.7 0 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
+        <a-image src="image2.jpg" class="clickable" position="0.7 0 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
       </a-entity>
     </a-scene>
 
     <script>
-      document.querySelector('#video').addEventListener('click', function () {
-        this.components.material.material.map.image.play();
+      var videoEl = document.querySelector('#video');
+
+      document.querySelector('#marker').addEventListener('markerFound', function() {
+        videoEl.play();
       });
 
       document.querySelector('#marker').addEventListener('markerLost', function() {
-        var video = document.querySelector('#video');
-        video.components.material.material.map.image.pause();
+        if (!videoEl.paused) videoEl.pause();
       });
+
+      videoEl.onended = function() {
+        videoEl.currentTime = 0;
+        videoEl.pause();
+      }
 
       var buttons = document.querySelectorAll('.clickable');
       for(var i = 0; i < buttons.length; i++) {
