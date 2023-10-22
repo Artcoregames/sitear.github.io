@@ -1,5 +1,33 @@
 <html>
   <head>
+<script>
+  var marker = document.querySelector('#marker');
+  var video = document.querySelector('#video');
+
+  marker.addEventListener('loaded', () => {
+    marker.addEventListener('markerLost', function() {
+      if (video.components && 
+          video.components.material && 
+          video.components.material.material.map.image.pause) {
+        video.components.material.material.map.image.pause();
+      } else {
+        console.error('Unable to access video component or video pause function');
+      }
+    });
+  });
+  
+  video.addEventListener('loaded', () => {
+    video.addEventListener('click', function() {
+      if (this.components && 
+          this.components.material && 
+          this.components.material.material.map.image.play) {
+        this.components.material.material.map.image.play();
+      } else {
+        console.error('Unable to access video component or video play function');
+      }
+    });
+  });
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
