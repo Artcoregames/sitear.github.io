@@ -17,8 +17,17 @@
     </a-scene>
 
     <script>
-      document.querySelector('#video').addEventListener('click', function () {
-        this.components.material.material.map.image.play();
+      var videoEl = document.querySelector('#video');
+      videoEl.addEventListener('loadeddata', function () {
+        videoEl.addEventListener('click', function () {
+          var video = this.components.material.material.map.image;
+          if(video.paused){
+            video.play();
+          }
+          else{
+            video.pause();
+          }
+        });
       });
 
       document.querySelector('#marker').addEventListener('markerLost', function() {
