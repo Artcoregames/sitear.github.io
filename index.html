@@ -17,20 +17,18 @@
 
     <script>
       window.onload = function() {
-        document.getElementById('button1').addEventListener('touchstart', function() {
-          this.innerText = 'Кнопка нажата';
+        document.getElementById('button1').addEventListener('click', function(){
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
         });
 
-        document.getElementById('button2').addEventListener('touchstart', function(){
-          this.innerText = 'Кнопка нажата';
+        document.getElementById('button2').addEventListener('click', function(){
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
+        });
+
+        document.querySelector('#video').addEventListener('click', function () {
+          window.open('https://www.google.com/', '_blank', 'noopener,noreferrer'); 
         });
       }
-
-      document.querySelector('#video').addEventListener('touchstart', function () {
-        this.components.material.material.map.image.play();
-      });
 
       document.querySelector('#marker').addEventListener('markerLost', function() {
         var video = document.querySelector('#video');
