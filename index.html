@@ -1,38 +1,21 @@
 <html>
   <head>
-<script>
-  var marker = document.querySelector('#marker');
-  var video = document.querySelector('#video');
 
-  marker.addEventListener('loaded', () => {
-    marker.addEventListener('markerLost', function() {
-      if (video.components && 
-          video.components.material && 
-          video.components.material.material.map.image.pause) {
-        video.components.material.material.map.image.pause();
-      } else {
-        console.error('Unable to access video component or video pause function');
-      }
-    });
-  });
-  
-  video.addEventListener('loaded', () => {
-    video.addEventListener('click', function() {
-      if (this.components && 
-          this.components.material && 
-          this.components.material.material.map.image.play) {
-        this.components.material.material.map.image.play();
-      } else {
-        console.error('Unable to access video component or video play function');
-      }
-    });
-  });
-</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+<script document.getElementById('button1').addEventListener('click', function(){
+    window.open('http://your-link-1.com', '_blank');
+});
+
+document.getElementById('button2').addEventListener('click', function(){
+    window.open('http://your-link-2.com', '_blank');
+}); </script>
+
   </head>
   <body>
+<button id="button1" style="position: absolute; bottom: 50px; left: 10%; width: 40%;">Открыть ссылку 1</button>
+<button id="button2" style="position: absolute; bottom: 50px; right: 10%; width: 40%;">Открыть ссылку 2</button>
     <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
 	  
