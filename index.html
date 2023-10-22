@@ -5,8 +5,8 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
-<button id="button1" style="position: absolute; bottom: 90px; left: 10%; width: 40%;">Открыть ссылку 1</button>
-<button id="button2" style="position: absolute; bottom: 90px; right: 10%; width: 40%;">Открыть ссылку 2</button>
+<button id="button1" style="position: absolute; bottom: 90px; left: 10%; width: 45%;">Открыть ссылку 1</button>
+<button id="button2" style="position: absolute; bottom: 90px; right: 10%; width: 45%;">Открыть ссылку 2</button>
     <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
       
@@ -17,16 +17,16 @@
 
     <script>
       window.onload = function() {
-        document.getElementById('button1').addEventListener('click', function(){
+        document.getElementById('button1').addEventListener('touchstart', function() {
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
         });
 
-        document.getElementById('button2').addEventListener('click', function(){
+        document.getElementById('button2').addEventListener('touchstart', function(){
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
         });
       }
 
-      document.querySelector('#video').addEventListener('click', function () {
+      document.querySelector('#video').addEventListener('touchstart', function () {
         this.components.material.material.map.image.play();
       });
 
