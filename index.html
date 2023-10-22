@@ -2,37 +2,43 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar.image-aframe.prod.js"></script>
   </head>
+  
   <body>
     <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: [customFields.libVersion]; objects: .clickable"></a-camera>
+      
+      <a-assets>
+        <video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939"  loop="true" crossorigin="anonymous"></video>
+      </a-assets>
       
       <a-entity mindar-image-target="targetIndex: 0" id="marker">
-        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939"  position="0 0 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video>
+        <a-video material="src: #video" geometry="primitive: plane; height: 2; width: 1" rotation="0 0 0" class="clickable"></a-video>
 
-        <a-image src="image1.jpg" class="clickable" position="-1 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
-        <a-image src="image1.jpg" class="clickable" position="1 1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
+        <a-image src="image1.jpg" class="clickable" position="-0.4-1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
+        <a-image src="image1.jpg" class="clickable" position="0.4 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
       </a-entity>
     </a-scene>
 
     <script>
-      var videoEl = document.querySelector('#video');
-      videoEl.addEventListener('loadeddata', function () {
-        videoEl.addEventListener('click', function () {
-          var video = this.components.material.material.map.image;
-          if(video.paused){
-            video.play();
-          }
-          else{
-            video.pause();
-          }
-        });
+      AFRAME.registerComponent('videoplay-pause', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            let video = document.querySelector('#video');
+            
+            if(video.paused){
+              video.play();
+            } else {
+              video.pause();
+            } 
+          }); 
+        }
       });
-
+      
       document.querySelector('#marker').addEventListener('markerLost', function() {
-        var video = document.querySelector('#video');
-        video.components.material.material.map.image.pause();
+        let video = document.querySelector('#video');
+        video.pause();
       });
 
       var buttons = document.querySelectorAll('.clickable');
