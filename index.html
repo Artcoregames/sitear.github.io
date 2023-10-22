@@ -18,10 +18,12 @@
     <script>
       window.onload = function() {
         document.getElementById('button1').addEventListener('touchstart', function() {
+          this.innerText = 'Кнопка нажата';
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
         });
 
         document.getElementById('button2').addEventListener('touchstart', function(){
+          this.innerText = 'Кнопка нажата';
           window.open('https://www.google.com/', '_blank', 'noopener,noreferrer');
         });
       }
