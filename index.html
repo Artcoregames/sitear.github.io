@@ -18,13 +18,17 @@
 
   <script>
     var video = document.querySelector('#video');
+
     video.addEventListener('click', function () {
-        if(video.paused) video.play();
-        else video.pause();
+        if(this.components.material.material.map.image.paused) {
+            this.components.material.material.map.image.play();
+        } else {
+            this.components.material.material.map.image.pause();
+        }
     });
 
     document.querySelector('#marker').addEventListener('markerLost', function() {
-        video.pause();
+        video.components.material.material.map.image.pause();
     });
 
     var buttons = document.querySelectorAll('.clickable');
