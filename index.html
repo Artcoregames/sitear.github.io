@@ -5,11 +5,17 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
+  
+    <!-- Hidden HTML5 video tag -->
+    <video id="html-video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" style="display: none;"></video>
+
     <a-scene mindar-image="imageTargetSrc: ./c.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
       
       <a-entity mindar-image-target="targetIndex: 0" id="marker">
-        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" position="0 0 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video>
+      
+        <!-- Link HTML5 video to A-frame video element -->
+        <a-video id="video" src="#html-video" position="0 0 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video> 
 
         <a-image id="play-button" src="image1.jpg" position="0 0 0.1" height="0.3" width="0.3" rotation="0 0 0"></a-image>
 
@@ -23,13 +29,13 @@
         document.querySelector('#play-button').addEventListener('click', function (event) {
           event.stopPropagation();
           this.setAttribute('visible', false);
-          let videoEl = document.querySelector('#video').components.video;
+          let videoEl = document.querySelector('#html-video');
           if (!videoEl) return;
           videoEl.play();
         });
 
         document.querySelector('#marker').addEventListener('markerLost', function() {
-          var video = document.querySelector('#video').components.video;
+          var video = document.querySelector('#html-video');
           if (!video) return;
           video.pause();
         });
