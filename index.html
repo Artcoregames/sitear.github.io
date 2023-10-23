@@ -17,7 +17,8 @@
     </a-scene>
 
     <script>
-      document.querySelector('#video').addEventListener('click', function () {
+      document.querySelector('#video').addEventListener('click', function (event) {
+        event.stopPropagation();
         this.components.material.material.map.image.play();
       });
 
