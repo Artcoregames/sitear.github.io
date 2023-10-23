@@ -9,24 +9,24 @@
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
       
       <a-entity mindar-image-target="targetIndex: 0" id="marker">
-        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" class="clickable" position="0 0 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video>
+        <a-video id="video" src="https://cdn.glitch.global/aac91519-95ff-4996-8909-e5c41f3cfff9/mov_bbb.mp4?v=1680745936939" class="video" position="0 0 0" height="2" width="1" rotation="0 0 0" loop="true" playsinline></a-video>
 
-        <a-image src="image1.jpg" class="clickable" position="-0.7 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
-        <a-image src="image1.jpg" class="clickable" position="0.7 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
+        <a-image src="image1.jpg" class="button clickable" position="-0.7 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
+        <a-image src="image1.jpg" class="button clickable" position="0.7 -1 0" height="0.3" width="0.3" rotation="0 0 0"></a-image>
       </a-entity>
     </a-scene>
 
     <script>
-      document.querySelector('#video').addEventListener('click', function () {
+      document.querySelector('.video').addEventListener('click', function () {
         this.components.material.material.map.image.play();
       });
 
       document.querySelector('#marker').addEventListener('markerLost', function() {
-        var video = document.querySelector('#video');
+        var video = document.querySelector('.video');
         video.components.material.material.map.image.pause();
       });
 
-      var buttons = document.querySelectorAll('.clickable');
+      var buttons = document.querySelectorAll('.button');
       for(var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function () {
           window.open('https://www.google.com', '_blank');
